@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Web and Mobile">
+
+  <listeners>
+	  <listener class-name="utilities.ExtentReportManager"></listener>
+  </listeners>
+
+    <test name="Contact List App Login Test" >
+        <parameter name = "applicationType" value="web"/>
+        <classes>
+            <class name="utilities.Hooks"></class>
+            <class name="testCases.web.LoginTest">
+            </class>
+        </classes>
+    </test>
+
+    <test name="Wdio Demo App Login Test" >
+        <parameter name = "applicationType" value="mobile"/>
+        <classes>
+            <class name="utilities.Hooks"></class>
+            <class name="testCases.mobile.LoginTest"></class>
+        </classes>
+    </test>
+    <test name="Wdio Demo App Signup Test" >
+        <parameter name = "applicationType" value="mobile"/>
+        <classes>
+            <class name="utilities.Hooks"></class>
+            <class name="testCases.mobile.SignupTest"></class>
+        </classes>
+    </test>
+</suite> <!-- Suite -->
