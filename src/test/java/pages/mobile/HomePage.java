@@ -10,15 +10,15 @@ public class HomePage extends BaseFunction {
     //Creating a constructor for this class
     public HomePage(){
         super();
-        PageFactory.initElements(appiumDriver, this);
+        PageFactory.initElements(driver, this);
     }
 
     //Defining the locators
-//    public static By loginLabelSelByID = MobileBy.AccessibilityId("Login");
+    public static By loginLabelSelByID = MobileBy.AccessibilityId("Login");
 
-    //Action Methods
-//    public void clickLoginLabel(){
-//        mobileElementClick(loginLabelSelByID);
-//    }
+//    Action Methods
+    public void clickLoginLabel(){
+        element(loginLabelSelByID);
+    }
 
 }

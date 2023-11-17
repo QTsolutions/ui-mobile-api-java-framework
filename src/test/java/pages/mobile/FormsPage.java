@@ -9,7 +9,7 @@ public class FormsPage extends BaseFunction {
     //Creating a constructor for this class
     public FormsPage(){
         super();
-        PageFactory.initElements(appiumDriver, this);
+        PageFactory.initElements(driver, this);
     }
 
     //Defining the locators
@@ -18,8 +18,8 @@ public class FormsPage extends BaseFunction {
     //Action Methods
     public void clickActiveButton(){
         mobileElementScrollIntoView("Active");
-        waitForMobileElementToBeVisible(activeBtnSelByXPATH);
-        mobileElementClick(activeBtnSelByXPATH);
+        waitForElementToBeVisible(activeBtnSelByXPATH);
+        clickElement(activeBtnSelByXPATH);
     }
 
 }

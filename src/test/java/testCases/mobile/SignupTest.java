@@ -10,7 +10,6 @@ import utilities.BaseFunction;
 public class SignupTest extends BaseFunction{
     LoginPage loginPage = new LoginPage();
     NavigationsPage navigationsPage = new NavigationsPage();
-    FormsPage formsPage = new FormsPage();
 
     @Test()
     public void userSignUp(){

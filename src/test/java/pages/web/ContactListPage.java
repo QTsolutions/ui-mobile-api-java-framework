@@ -15,11 +15,11 @@ public class ContactListPage extends BaseFunction {
     public static By logoutButton = By.xpath("//button[@id='logout']");
 
     //Action Methods
-    public void userLandsOnContactListPage(){
-        waitForWebElementToBeVisible(contactListTitle);
-        element(contactListTitle).isDisplayed();
+    public boolean userLandsOnContactListPage(){
+        waitForElementToBeVisible(contactListTitle);
+        return highlightedElement(contactListTitle).isDisplayed();
     }
     public void userClicksOnLogout(){
-        element(logoutButton).click();
+        highlightedElement(logoutButton).click();
     }
 }

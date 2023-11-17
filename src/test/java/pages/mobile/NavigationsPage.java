@@ -10,7 +10,7 @@ public class NavigationsPage extends BaseFunction {
     //Creating a constructor for this class
     public NavigationsPage(){
         super();
-        PageFactory.initElements(appiumDriver, this);
+        PageFactory.initElements(driver, this);
     }
 
     //Defining the locators
@@ -18,12 +18,11 @@ public class NavigationsPage extends BaseFunction {
     public static By formsLabelSelByID = MobileBy.AccessibilityId("Forms");
 
     //Action Methods
-    public LoginPage clickLoginLabel(){
-        mobileElementClick(loginLabelSelByID);
-        return new LoginPage();
+    public void clickLoginLabel(){
+        clickElement(loginLabelSelByID);
     }
     public void clickFormsLabel(){
-        mobileElementClick(formsLabelSelByID);
+        clickElement(formsLabelSelByID);
     }
 
 

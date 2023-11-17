@@ -13,10 +13,8 @@ public class LoginTest extends BaseFunction {
     public void registeredUserLogin(){
         loginPage.userLandsOnTheLoginPage();
         loginPage.userEnterAndSubmitCredentials();
-        //        Assert
-        contactListPage.userLandsOnContactListPage();
+        Assert.assertTrue(contactListPage.userLandsOnContactListPage());
         contactListPage.userClicksOnLogout();
-        loginPage.userLandsOnTheLoginPage();
-        //        Assert
+        Assert.assertTrue(loginPage.userLandsOnTheLoginPage());
     }
 }

@@ -11,7 +11,7 @@ public class LoginPage extends BaseFunction {
     //Creating a constructor for this class
     public LoginPage(){
         super();
-        PageFactory.initElements(appiumDriver, this);
+        PageFactory.initElements(driver, this);
     }
 
     //Defining the locators, final is used because we are not modifying these selectors
@@ -29,37 +29,37 @@ public class LoginPage extends BaseFunction {
 
     //Action Methods
     public void inputUsername(String usernameText) {
-        mobileElementSendKeys(usernameSelByID, usernameText);
+        elementSendKeys(usernameSelByID, usernameText);
     }
     public void inputPassword(String passwordText){
-        mobileElementSendKeys(passwordSelByID, passwordText);
+        elementSendKeys(passwordSelByID, passwordText);
     }
     public void inputConfirmPassword(String confirmPassText){
-        mobileElementSendKeys(confirmPassSelByID, confirmPassText);
+        elementSendKeys(confirmPassSelByID, confirmPassText);
     }
     public void clickLoginBtn(){
-        mobileElementClick(loginBtnSelByID);
+        clickElement(loginBtnSelByID);
     }
     public void clickSignUpBtn(){
-        mobileElementClick(signUpBtnSelByXPATH);
+        clickElement(signUpBtnSelByXPATH);
     }
     public String signedUpMessage(){
-        return mobileElementGetText(signedUpMessageXPATH);
+        return elementGetText(signedUpMessageXPATH);
     }
     public boolean signedUpAlert(){
-        return mobileElement(signedUpAlertXPATH).isDisplayed();
+        return element(signedUpAlertXPATH).isDisplayed();
     }
     public void clickSignUp(){
-    mobileElementClick(signUpLabelByXPATH);
+    clickElement(signUpLabelByXPATH);
     }
     public void clickOkAlert(){
-        mobileElementClick(loginBtnSelByXPATH);
+        clickElement(loginBtnSelByXPATH);
     }
     public boolean successAlert(){
-        return mobileElement(successTitleAlertXPATH).isDisplayed();
+        return element(successTitleAlertXPATH).isDisplayed();
     }
     public boolean loginSignupTitle(){
-        return mobileElement(loginSignupTitleXPATH).isDisplayed();
+        return element(loginSignupTitleXPATH).isDisplayed();
     }
 
 }

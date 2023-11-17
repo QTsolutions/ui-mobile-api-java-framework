@@ -5,6 +5,8 @@ import org.testng.annotations.*;
 import pages.mobile.LoginPage;
 import pages.mobile.NavigationsPage;
 import utilities.BaseFunction;
+import utilities.PropFileHandler;
+
 public class LoginTest extends BaseFunction{
     LoginPage loginPage = new LoginPage();
     NavigationsPage navigationsPage = new NavigationsPage();
@@ -17,14 +19,14 @@ public class LoginTest extends BaseFunction{
     @AfterMethod
     public void afterSetUp(){
         System.out.println("After Method");
-        closeMobileSession();
+        closeSession();
     }
 
     @Test()
     public void userLogin(){
         navigationsPage.clickLoginLabel();
-        loginPage.inputUsername("shoaib@gmail.com");
-        loginPage.inputPassword("123456@Qwe");
+        loginPage.inputUsername(PropFileHandler.readProperty("username"));
+        loginPage.inputPassword(PropFileHandler.readProperty("password"));
         loginPage.clickLoginBtn();
         Assert.assertTrue(loginPage.successAlert());
         loginPage.clickOkAlert();

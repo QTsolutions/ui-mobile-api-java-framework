@@ -30,6 +30,7 @@ public class BaseFunction {
             e.printStackTrace();
         }
     }
+
     private By getBy(String locatorType, String locatorValue) {
         switch (Locators.valueOf(locatorType)) {
             case id:
@@ -60,7 +61,7 @@ public class BaseFunction {
     }
 
 
-    protected WebElement element(By elementToken) {
+    protected WebElement highlightedElement(By elementToken) {
         hardwait(1);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].setAttribute('style','background: yellow; border: 2px solid red;');",
@@ -70,18 +71,26 @@ public class BaseFunction {
         return driver.findElement(getLocator(elementToken, ""));
     }
 
-    protected void scrollIntoWebElement(By elem)
-    {
-        WebElement element = element(elem);
+    protected void scrollIntoWebElement(By elem) {
+        WebElement element = highlightedElement(elem);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
-    protected void scrollIntoWebElement(WebElement elem)
-    {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true); ",elem);
+
+    protected void scrollIntoWebElement(WebElement elem) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true); ", elem);
+    }
+
+    public static void logMessage(String msg) {
+        Reporter.log(msg, true);
+    }
+
+    public void waitForElementToBeVisible(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public void initializeWebSession() {
-        logMessage("*********************** Session Started ****************************");
+        logMessage("*********************** Web Session Started ****************************");
         new PropFileHandler();
         String browserName = PropFileHandler.readProperty("browser");
         driverFactory = new DriverFactory();
@@ -90,64 +99,65 @@ public class BaseFunction {
         driver.manage().window().maximize();
     }
 
-    public static void closeWebSession() {
+    public static void closeSession() {
         if (driver != null) {
             driver.quit();
-            logMessage("*********************** Web Session closed *****************************");
+            logMessage("*********************** Session closed *****************************");
         }
     }
 
-    public void launchWebApplication(String url) {
-        initializeWebSession();
-        driver.get(url);
+    public void launchSession(String appType) {
+        if (appType.equals("web")) {
+            initializeWebSession();
+            driver.get(PropFileHandler.readProperty("appUrl"));
+        } else if (appType.equals("mobile")) {
+            initializeMobileSession();
+        }
     }
 
-    public void waitForWebElementToBeVisible(By locator)
-    {
-        WebDriverWait wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
     //---------------------------------------- Mobile Setup ----------------------------------------------------------------------
     public void initializeMobileSession() {
         logMessage("*********************** Mobile Session Started ****************************");
         appiumDriver = new AppiumDriverEx().getAppiumDriver();
-    }
-    public static void closeMobileSession() {
-        if (appiumDriver != null) {
-            appiumDriver.quit();
-            logMessage("*********************** Mobile Session closed *****************************");
-        }
-    }
-    public static void logMessage(String msg) {
-        Reporter.log(msg, true);
-    }
-    public void waitForMobileElementToBeVisible(By locator)
-    {
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        this.driver = appiumDriver;
     }
 
-    protected void mobileElementClick(By elementToken){
-        waitForMobileElementToBeVisible(elementToken);
-        appiumDriver.findElement(elementToken).click();
+//    public static void closeMobileSession() {
+//        if (appiumDriver != null) {
+//            appiumDriver.quit();
+//            logMessage("*********************** Mobile Session closed *****************************");
+//        }
+//    }
+
+//    public void waitForMobileElementToBeVisible(By locator) {
+//        WebDriverWait wait = new WebDriverWait(appiumDriver, 10);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+//    }
+
+    protected void clickElement(By elementToken) {
+        waitForElementToBeVisible(elementToken);
+        driver.findElement(elementToken).click();
     }
-    protected WebElement mobileElement(By elementToken){
-        waitForMobileElementToBeVisible(elementToken);
-        return appiumDriver.findElement(elementToken);
+
+    protected WebElement element(By elementToken) {
+        waitForElementToBeVisible(elementToken);
+        return driver.findElement(elementToken);
     }
-    protected void mobileElementSendKeys(By elementToken, String text){
-        waitForMobileElementToBeVisible(elementToken);
-        appiumDriver.findElement(elementToken).sendKeys(text);
+
+    protected void elementSendKeys(By elementToken, String text) {
+        waitForElementToBeVisible(elementToken);
+        driver.findElement(elementToken).sendKeys(text);
     }
-    protected String mobileElementGetText(By elementToken)
-    {
-        waitForMobileElementToBeVisible(elementToken);
-        return appiumDriver.findElement(elementToken).getText();
+
+    protected String elementGetText(By elementToken) {
+        waitForElementToBeVisible(elementToken);
+        return driver.findElement(elementToken).getText();
     }
-    protected void mobileElementScrollIntoView(String visibleText){
-        appiumDriver
+
+    protected void mobileElementScrollIntoView(String visibleText) {
+        driver
                 .findElement(MobileBy
                         .AndroidUIAutomator(
-                                "new UiScrollable(new UiSelector().scrollable(true).index(0)).scrollIntoView(new UiSelector().text(\""+visibleText+"\"))"));
+                                "new UiScrollable(new UiSelector().scrollable(true).index(0)).scrollIntoView(new UiSelector().text(\"" + visibleText + "\"))"));
     }
 }

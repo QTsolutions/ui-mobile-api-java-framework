@@ -19,14 +19,14 @@ public class LoginPage extends BaseFunction {
     public static By signUpBtn = By.xpath("//button[@id='signup']");
 
     //Action Methods
-    public void userLandsOnTheLoginPage(){
-        waitForWebElementToBeVisible(contactListAppTitle);
-        element(contactListAppTitle).isDisplayed();
+    public boolean userLandsOnTheLoginPage(){
+        waitForElementToBeVisible(contactListAppTitle);
+        return highlightedElement(contactListAppTitle).isDisplayed();
     }
 
     public void userEnterAndSubmitCredentials(){
-        element(emailTextfield).sendKeys(PropFileHandler.readProperty("username"));
-        element(passwordField).sendKeys(PropFileHandler.readProperty("password"));
-        element(submitBtn).click();
+        highlightedElement(emailTextfield).sendKeys(PropFileHandler.readProperty("username"));
+        highlightedElement(passwordField).sendKeys(PropFileHandler.readProperty("password"));
+        highlightedElement(submitBtn).click();
     }
 }
